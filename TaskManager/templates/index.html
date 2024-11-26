@@ -8,6 +8,14 @@
    
 </head>
 <body>
-    <h1>Task Manager</h1>
+    <div class="main">
+        <section class="sidebar">
+            {% include('components/sidebar.html') %}
+        </section>
+        <section class="maincontent">
+            {% include('components/maincontent.html') %}
+       </section>
+    </div>
+
 </body>
 </html>

@@ -17,15 +17,15 @@ def FetchDetails():
     return jsonify({"tasks":tasks})
 
 @app.route('/createTask')
-def FetchDetails():
+def CreateTask():
     return render_template('index.html')
 
 @app.route('/delete/:ID',methods=['DELETE'])
-def DeleteTask():
+def Deletetask():
     return render_template('index.html')
 
 @app.route('/update/:ID',methods=['UPDATE'])
-def DeleteTask():
+def Updatetask():
     return render_template('index.html')
 
 
