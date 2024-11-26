@@ -20,9 +20,24 @@ h1{
     width: 20%;
     background-color: #FCFAF8;
     height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
 }
 .main .maincontent
 {
     width: 80%;
-    background-color: blue;
+    height: 100%;
+}
+.crudlist
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 60px;
+}
+.crudlist img{
+    margin-left: 20px;
 }
