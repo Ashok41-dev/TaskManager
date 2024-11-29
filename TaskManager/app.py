@@ -1,7 +1,11 @@
 from flask import Flask, jsonify, render_template, request, jsonify
 import sqlite3
 
-db = sqlite3.connect('taskmanager.db') 
+def get_db_connection():
+    conn = sqlite3.connect('taskmanager.db')
+    conn.row_factory = sqlite3.Row  
+    return conn
+
 
 app=Flask(__name__)
 
@@ -18,13 +22,30 @@ def HomePage(id):
 
 @app.route('/fetch')
 def FetchDetails():
-    tasks=db.execute('Select * from tasks').fetchall()
-    return jsonify({"tasks":tasks})
+        conn = get_db_connection()
+        tasks = conn.execute('SELECT * FROM tasks').fetchall()
+        return jsonify({"tasks":tasks})
 
 @app.route('/createTask',methods=['POST'])
 def CreateTask():
     try:
         data=request.get_json()
+        if data:
+            task_name = data.get('taskname')
+            description = data.get('description')
+            due_date = data.get('due_date')
+            conn = get_db_connection()
+            cursor = conn.cursor()
+
+            cursor.execute('''
+                INSERT INTO tasks (taskname, description, due_date)
+                VALUES (?, ?, ?)
+            ''', (task_name, description, due_date))
+
+            conn.commit()
+
+            conn.close()
+
     except:
         return jsonify({
                 'success': False,
