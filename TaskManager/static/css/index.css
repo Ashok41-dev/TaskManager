@@ -41,3 +41,26 @@ h1{
 .crudlist img{
     margin-left: 20px;
 }
+.addtask
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+.addtask input{
+    margin-top: 10px;
+    width: 250px;
+    height: 45px;
+    text-indent: 10px;
+}
+.addtask button{
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #c0bab5;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 15px;
+}

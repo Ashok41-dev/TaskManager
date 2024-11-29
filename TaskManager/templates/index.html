@@ -13,7 +13,11 @@
             {% include('components/sidebar.html') %}
         </section>
         <section class="maincontent">
-            {% include('components/addtask.html') %}
+            {% if id=='addtask'%}
+               {% include('components/addtask.html') %}
+            {% else %} 
+                {% include('components/tasklist.html') %}
+            {% endif %}     
        </section>
     </div>
 

@@ -7,8 +7,13 @@ app=Flask(__name__)
 
 
 @app.route('/')
-def HomePage():
+def Default():
+    return render_template('index.html')
 
+@app.route('/<string:id>')
+def HomePage(id):
+    if id=='addtask':
+        return render_template('index.html', id='addtask')
     return render_template('index.html')
 
 @app.route('/fetch')
@@ -19,6 +24,7 @@ def FetchDetails():
 @app.route('/createTask')
 def CreateTask():
     return render_template('index.html')
+
 
 @app.route('/delete/:ID',methods=['DELETE'])
 def Deletetask():
