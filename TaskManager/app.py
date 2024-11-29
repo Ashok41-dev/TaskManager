@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request, jsonify
 import sqlite3
 
 db = sqlite3.connect('taskmanager.db') 
@@ -21,9 +21,15 @@ def FetchDetails():
     tasks=db.execute('Select * from tasks').fetchall()
     return jsonify({"tasks":tasks})
 
-@app.route('/createTask')
+@app.route('/createTask',methods=['POST'])
 def CreateTask():
-    return render_template('index.html')
+    try:
+        data=request.get_json()
+    except:
+        return jsonify({
+                'success': False,
+                'message': "Issue in creating task"
+            })
 
 
 @app.route('/delete/:ID',methods=['DELETE'])

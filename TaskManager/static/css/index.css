@@ -41,7 +41,7 @@ h1{
 .crudlist img{
     margin-left: 20px;
 }
-.addtask
+#addtask
 {
     display: flex;
     justify-content: center;
@@ -49,13 +49,13 @@ h1{
     flex-direction: column;
     width: 100%;
 }
-.addtask input{
+#addtask input{
     margin-top: 10px;
     width: 250px;
     height: 45px;
     text-indent: 10px;
 }
-.addtask button{
+#addtask button{
     margin-top: 20px;
     padding: 20px;
     background-color: #c0bab5;
