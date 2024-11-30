@@ -6,8 +6,25 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row  
     return conn
 
+# def create_table():
+#     conn = get_db_connection()
+#     cursor = conn.cursor()
+#     cursor.execute('''
+#         CREATE TABLE tasks (
+#             id INTEGER PRIMARY KEY AUTOINCREMENT,
+#             taskname TEXT NOT NULL,
+#             description TEXT,
+#             date TEXT
+#         )
+#     ''')
+#     conn.commit()
+#     conn.close()
+
+# create_table()
+
 
 app=Flask(__name__)
+
 
 
 @app.route('/')
@@ -24,33 +41,58 @@ def HomePage(id):
 def FetchDetails():
         conn = get_db_connection()
         tasks = conn.execute('SELECT * FROM tasks').fetchall()
-        return jsonify({"tasks":tasks})
+        task_list = [dict(task) for task in tasks]
+        return jsonify(task_list)
+      
 
-@app.route('/createTask',methods=['POST'])
+@app.route('/createTask', methods=['POST'])
 def CreateTask():
     try:
-        data=request.get_json()
+        # Get JSON data from the request
+        data = request.get_json()
+        print(f"Received data: {data}")
+
         if data:
             task_name = data.get('taskname')
             description = data.get('description')
-            due_date = data.get('due_date')
+            date = data.get('date')
+
+            print(f"Task Name: {task_name}, Description: {description}, Date: {date}")
+
+            # Ensure task data is valid
+            if not task_name or not date:
+                raise ValueError("Task name and date are required fields.")
+
+            # Database connection
             conn = get_db_connection()
             cursor = conn.cursor()
 
+            # Insert task data into the tasks table
             cursor.execute('''
-                INSERT INTO tasks (taskname, description, due_date)
-                VALUES (?, ?, ?)
-            ''', (task_name, description, due_date))
+                INSERT INTO tasks (taskname, description, date)
+                VALUES (?, ?, ?)''', (task_name, description, date))
 
+            # Commit changes and close the connection
             conn.commit()
-
             conn.close()
 
-    except:
+            return jsonify({
+                'success': True,
+                'message': "Task created successfully"
+            })
+
+        else:
+            raise ValueError("No task data received")
+
+    except Exception as e:
+        # Log the full exception message
+        print(f"Error: {e}")
         return jsonify({
                 'success': False,
-                'message': "Issue in creating task"
+                'message': "Issue in creating task",
+                'error': str(e) 
             })
+
 
 
 @app.route('/delete/:ID',methods=['DELETE'])
