@@ -6,13 +6,13 @@ window.onload=()=>{
         e.preventDefault();
         const entries=new FormData(e.target);
         const object=Object.fromEntries(entries.entries());
-    
+        const message=document.getElementById('message');
         const response=await fetch('/createTask',{headers:{'Content-Type':'application/json'},method:'POST',body:JSON.stringify(object)});
 
         if(response.ok)
         {
              const data=await response.json();
-             console.log(data);
+             message.innerText=data.message;
              return data;
         }
         else

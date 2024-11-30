@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, jsonify
+from flask import Flask, jsonify, redirect, render_template, request, jsonify
 import sqlite3
 
 def get_db_connection():
@@ -35,20 +35,21 @@ def Default():
 def HomePage(id):
     if id=='addtask':
         return render_template('index.html', id='addtask')
+    elif id=='tasklist':
+        redirect('/tasklist')
     return render_template('index.html')
 
-@app.route('/fetch')
+@app.route('/tasklist')
 def FetchDetails():
         conn = get_db_connection()
         tasks = conn.execute('SELECT * FROM tasks').fetchall()
         task_list = [dict(task) for task in tasks]
-        return jsonify(task_list)
+        return render_template('index.html',id='tasklist',task=task_list)
       
 
 @app.route('/createTask', methods=['POST'])
 def CreateTask():
     try:
-        # Get JSON data from the request
         data = request.get_json()
         print(f"Received data: {data}")
 
@@ -59,11 +60,9 @@ def CreateTask():
 
             print(f"Task Name: {task_name}, Description: {description}, Date: {date}")
 
-            # Ensure task data is valid
             if not task_name or not date:
                 raise ValueError("Task name and date are required fields.")
 
-            # Database connection
             conn = get_db_connection()
             cursor = conn.cursor()
 
