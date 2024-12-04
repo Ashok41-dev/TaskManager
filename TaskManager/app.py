@@ -52,8 +52,14 @@ def FetchDetails():
 @app.route('/deletetask', methods=['GET'])
 def DeleteTask(ID=None):
         if ID:
-             date=request.args.get('date')
-             print('work',ID,date)
+            date=request.args.get('date')
+            print('work',ID,date)
+            conn = get_db_connection()
+            tasks = conn.execute('delete FROM tasks where taskname=? AND date=?',(ID,date))
+            conn.commit()
+            tasks = conn.execute('SELECT * FROM tasks').fetchall()
+            task_list = [dict(task) for task in tasks]
+            return render_template('index.html',id='deletetask',task=task_list)
         else:     
             conn = get_db_connection()
             tasks = conn.execute('SELECT * FROM tasks').fetchall()
