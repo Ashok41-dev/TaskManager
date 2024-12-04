@@ -15,6 +15,8 @@
         <section class="maincontent">
             {% if id=='addtask'%}
                {% include('components/addtask.html') %}
+            {% elif(id=='deletetask') %} 
+                {% include('components/deletetask.html') %}
             {% else %} 
                 {% include('components/tasklist.html') %}
             {% endif %}     
