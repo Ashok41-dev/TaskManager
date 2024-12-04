@@ -53,12 +53,19 @@ def FetchDetails():
         task_list = [dict(task) for task in tasks]
         return render_template('index.html',id='tasklist',task=task_list)
 
+@app.route('/updatetask/<string:ID>',methods=['GET'])
 @app.route('/updatetask',methods=['GET'])
-def UpdateTask():
-        conn = get_db_connection()
-        tasks = conn.execute('SELECT * FROM tasks').fetchall()
-        task_list = [dict(task) for task in tasks]
-        return render_template('index.html',id='updatetask',task=task_list)
+def UpdateTask(ID=None):
+        if ID:
+             id=ID
+             print("id",ID)
+             return render_template('index.html',id='update')
+    
+        else:
+            conn = get_db_connection()
+            tasks = conn.execute('SELECT * FROM tasks').fetchall()
+            task_list = [dict(task) for task in tasks]
+            return render_template('index.html',id='updatetask',task=task_list)
       
 
 @app.route('/deletetask/<string:ID>', methods=['GET'])
