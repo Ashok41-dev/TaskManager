@@ -22,3 +22,18 @@ window.onload=()=>{
     }
     
 }
+
+UpdateTask()
+async function UpdateTask(){
+  const editButton=document.querySelectorAll('.editbtn');
+
+  if(editButton)
+  {
+    for(let button in editButton)
+    {
+        button.addEventListener('click',(e)=>{
+            console.log(e);
+        })
+    }
+  }
+}
