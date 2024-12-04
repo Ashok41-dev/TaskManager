@@ -31,8 +31,15 @@ async function UpdateTask(){
   {
     for(let button of editButton)
     {
-        button.addEventListener('click',(e)=>{
-            console.log(e);
+        button.addEventListener('click',async(e)=>{
+           const reponse=await fetch('http://localhost:2000',{headers:{'Content-Type':"application/json"},method:'PUT'})
+           if(reponse.ok)
+           {
+            const data=await reponse.json();
+            console.log(data);
+            return data;
+           }
+           console.log('Network issue!');
         })
     }
   }

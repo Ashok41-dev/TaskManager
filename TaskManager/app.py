@@ -134,6 +134,13 @@ def CreateTask():
 def Deletetask():
     return render_template('index.html')
 
+
+@app.route('/update',methods=['PUT'])
+def Update():
+    data=request.get_json()
+    print(data)
+    return render_template('index.html')
+
 # @app.route('/update/:ID',methods=['UPDATE'])
 # def Updatetask():
 #     return render_template('index.html')
