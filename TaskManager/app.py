@@ -48,12 +48,24 @@ def FetchDetails():
         task_list = [dict(task) for task in tasks]
         return render_template('index.html',id='tasklist',task=task_list)
       
-@app.route('/deletetask')
-def DeleteTask():
-        conn = get_db_connection()
-        tasks = conn.execute('SELECT * FROM tasks').fetchall()
-        task_list = [dict(task) for task in tasks]
-        return render_template('index.html',id='deletetask',task=task_list)
+@app.route('/deletetask/<string:ID>', methods=['GET'])
+@app.route('/deletetask', methods=['GET'])
+def DeleteTask(ID=None):
+        if ID:
+             date=request.args.get('date')
+             print('work',ID,date)
+        else:     
+            conn = get_db_connection()
+            tasks = conn.execute('SELECT * FROM tasks').fetchall()
+            task_list = [dict(task) for task in tasks]
+            return render_template('index.html',id='deletetask',task=task_list)
+
+# @app.route('/deletetask')
+# def DeleteTask():
+#         conn = get_db_connection()
+#         tasks = conn.execute('SELECT * FROM tasks').fetchall()
+#         task_list = [dict(task) for task in tasks]
+#         return render_template('index.html',id='deletetask',task=task_list)
 
 @app.route('/createTask', methods=['POST'])
 def CreateTask():

@@ -2,10 +2,10 @@
 <div class="taskmanager">
     {% for i in task %}
     <div class="tasklist">
-        <h2>{{i.taskname}}</h12>
+        <h2>{{i.taskname}}</h2>
         <h3>{{i.description}}</h3>
         <h5>{{i.date}}</h5>
-        <img src="/static/Assets/bin.png" alt="delete" width="20" height="20"/>
+        <a href='/deletetask/{{i.taskname}}?date={{i.data}}'><img src="/static/Assets/bin.png" alt="delete" width="20" height="20"/></a>
     </div>
     {% endfor %}
 </div>
