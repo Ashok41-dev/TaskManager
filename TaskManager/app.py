@@ -39,6 +39,8 @@ def HomePage(id):
         redirect('/tasklist')
     elif id=='deletetask':
         redirect('/deletetask')
+    elif id=='updatetask':
+        redirect('/updatetask')    
     return render_template('index.html')
 
 @app.route('/tasklist')
@@ -47,7 +49,15 @@ def FetchDetails():
         tasks = conn.execute('SELECT * FROM tasks').fetchall()
         task_list = [dict(task) for task in tasks]
         return render_template('index.html',id='tasklist',task=task_list)
+
+@app.route('/updatetask',methods=['GET'])
+def UpdateTask():
+        conn = get_db_connection()
+        tasks = conn.execute('SELECT * FROM tasks').fetchall()
+        task_list = [dict(task) for task in tasks]
+        return render_template('index.html',id='updatetask',task=task_list)
       
+
 @app.route('/deletetask/<string:ID>', methods=['GET'])
 @app.route('/deletetask', methods=['GET'])
 def DeleteTask(ID=None):
@@ -124,9 +134,9 @@ def CreateTask():
 def Deletetask():
     return render_template('index.html')
 
-@app.route('/update/:ID',methods=['UPDATE'])
-def Updatetask():
-    return render_template('index.html')
+# @app.route('/update/:ID',methods=['UPDATE'])
+# def Updatetask():
+#     return render_template('index.html')
 
 
 if __name__ == '__main__':
