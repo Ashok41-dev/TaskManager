@@ -1,5 +1,8 @@
 from flask import Flask, jsonify, redirect, render_template, request, jsonify
 import sqlite3
+from flask_cors import CORS
+
+
 
 def get_db_connection():
     conn = sqlite3.connect('taskmanager.db')
@@ -24,7 +27,7 @@ def get_db_connection():
 
 
 app=Flask(__name__)
-
+CORS(app)
 
 
 @app.route('/')
@@ -141,9 +144,6 @@ def Update():
     print(data)
     return render_template('index.html')
 
-# @app.route('/update/:ID',methods=['UPDATE'])
-# def Updatetask():
-#     return render_template('index.html')
 
 
 if __name__ == '__main__':

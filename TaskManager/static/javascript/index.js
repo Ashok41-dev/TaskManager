@@ -32,10 +32,14 @@ async function UpdateTask(){
     for(let button of editButton)
     {
         button.addEventListener('click',async(e)=>{
-           const reponse=await fetch('http://localhost:2000',{headers:{'Content-Type':"application/json"},method:'PUT'})
-           if(reponse.ok)
+            const id=button.getAttribute('data-id');
+            console.log(id);
+           const response=await fetch('http://localhost:2000/update',{headers:{'Content-Type':"application/json"},method:'PUT',
+            body:JSON.stringify(id)
+            })
+           if(response.ok)
            {
-            const data=await reponse.json();
+            const data=await response.json();
             console.log(data);
             return data;
            }
