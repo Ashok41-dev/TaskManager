@@ -29,7 +29,7 @@ async function UpdateTask(){
 
   if(editButton)
   {
-    for(let button in editButton)
+    for(let button of editButton)
     {
         button.addEventListener('click',(e)=>{
             console.log(e);
