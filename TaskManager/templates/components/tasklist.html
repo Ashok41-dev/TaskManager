@@ -2,10 +2,10 @@
 <div class="taskmanager">
     {% for i in task %}
     <div class="tasklist">
-       <span> Task:<h2>{{i.taskname}}</h2></span>
-        <span>Description:<h3>{{i.description}}</h3></span>
-            <span> Date:<h5>{{i.date}}</h5></span>
-                <span> Status:<h5>{{i.status}}</h5></span>
+       <span> Task: {{i.taskname}}</span>
+        <span>Description: {{i.description}}</span>
+            <span> Date: {{i.date}}</span>
+                <span> Status: {{i.status}}</span>
     </div>
     {% endfor %}
 </div>

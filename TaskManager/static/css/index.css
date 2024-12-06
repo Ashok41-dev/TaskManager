@@ -84,7 +84,9 @@ h1{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width:130px ;
+    width:200px;
+    font-size: 15px;
+    font-weight: 600;
 }
 
 .taskmanager
