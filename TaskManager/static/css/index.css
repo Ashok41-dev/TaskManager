@@ -93,3 +93,13 @@ h1{
     top: 5px;
     right: 5px
 }
+.completed
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 40px;
+    padding: 10px;
+    margin-top: 10px;
+}
