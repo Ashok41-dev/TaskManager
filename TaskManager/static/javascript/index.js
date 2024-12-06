@@ -1,7 +1,9 @@
-const formSubmit=document.getElementById('addtask');
-
 
 window.onload=()=>{
+  const formSubmit=document.getElementById('addtask');
+
+   if(!formSubmit)
+    return;
     formSubmit.onsubmit=async(e)=>{
         e.preventDefault();
         const entries=new FormData(e.target);
@@ -25,26 +27,30 @@ window.onload=()=>{
 
 UpdateTask()
 async function UpdateTask(){
-  const editButton=document.querySelectorAll('.editbtn');
+  const updateTask=document.querySelector('#updatetask');
 
-  if(editButton)
+  if(updateTask)
   {
-    for(let button of editButton)
-    {
-        button.addEventListener('click',async(e)=>{
-            const id=button.getAttribute('data-id');
-            console.log(id);
-           const response=await fetch('http://localhost:2000/update',{headers:{'Content-Type':"application/json"},method:'PUT',
-            body:JSON.stringify(id)
+  
+    updateTask.onsubmit=async (e)=>{
+         e.preventDefault();
+      
+          const formData=new FormData(e.target);
+          const entries=Object.fromEntries(formData.entries());
+          const id=window.location.pathname.split('/')[2];
+          const message=document.querySelector('#message');
+
+           const response=await fetch(`/update/${id}`,{headers:{'Content-Type':"application/json"},method:'PUT',
+            body:JSON.stringify(entries)
             })
            if(response.ok)
            {
             const data=await response.json();
-            console.log(data);
+            message.innerText=data.message
             return data;
            }
            console.log('Network issue!');
-        })
+        
     }
   }
 }

@@ -35,17 +35,7 @@ CORS(app)
 def Default():
     return render_template('index.html')
 
-@app.route('/<string:id>')
-def HomePage(id):
-    if id=='addtask':
-        return render_template('index.html', id='addtask')
-    elif id=='tasklist':
-        redirect('/tasklist')
-    elif id=='deletetask':
-        redirect('/deletetask')
-    elif id=='updatetask':
-        redirect('/updatetask')    
-    return render_template('index.html')
+
 
 @app.route('/tasklist')
 def FetchDetails():
@@ -148,12 +138,57 @@ def Deletetask():
     return render_template('index.html')
 
 
-@app.route('/update',methods=['PUT'])
-def Update():
-    data=request.get_json()
-    print(data)
-    return render_template('index.html')
+@app.route('/update/<string:id>',methods=['GET','PUT'])
+@app.route('/update',methods=['GET','PUT'])
+def Update(id=None):
+    if(request.method=='GET'):
+           return render_template('index.html',id="update")
+    elif request.method == 'PUT':
+        print(id)
+        conn=get_db_connection()
+        task=conn.execute('SELECT * FROM tasks WHERE id = ?',(id,)).fetchone()
+        if not task:
+            return {"message": "Task with the specified ID not found"}, 404
+            
+        data=request.get_json()
+        if not data:
+                return {"message": "No data provided in the PUT request"}, 400
+        
+        print(data)
+        taskname = data.get('taskname')
+        description = data.get('description')
+        date = data.get('date')
+        status = data.get('status')
+            
+        conn.execute(
+                '''
+                UPDATE tasks
+                SET taskname = ?,
+                    description = ?,
+                    date = ?,
+                    status = ?
+                WHERE id = ?;
+                ''',
+                (taskname, description, date, status, id)
+            )
+        conn.commit()
+            
+        return jsonify({"message":"task updated successfully!"})
 
+
+@app.route('/<string:id>')
+def HomePage(id):
+    if id=='addtask':
+        return render_template('index.html', id='addtask')
+    elif id=='tasklist':
+        redirect('/tasklist')
+    elif id=='deletetask':
+        redirect('/deletetask')
+    elif id=='updatetask':
+        redirect('/updatetask')    
+    elif id=='update':
+        redirect('/update')  
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
