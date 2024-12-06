@@ -17,7 +17,8 @@ def get_db_connection():
 #             id INTEGER PRIMARY KEY AUTOINCREMENT,
 #             taskname TEXT NOT NULL,
 #             description TEXT,
-#             date TEXT
+#             date TEXT,
+#             status TEXT
 #         )
 #     ''')
 #     conn.commit()
@@ -103,6 +104,8 @@ def CreateTask():
             task_name = data.get('taskname')
             description = data.get('description')
             date = data.get('date')
+            status = data.get('status')
+
 
             print(f"Task Name: {task_name}, Description: {description}, Date: {date}")
 
@@ -114,8 +117,8 @@ def CreateTask():
 
             # Insert task data into the tasks table
             cursor.execute('''
-                INSERT INTO tasks (taskname, description, date)
-                VALUES (?, ?, ?)''', (task_name, description, date))
+                INSERT INTO tasks (taskname, description, date,status)
+                VALUES (?, ?, ?,?)''', (task_name, description, date,status))
 
             # Commit changes and close the connection
             conn.commit()

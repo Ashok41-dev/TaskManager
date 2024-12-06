@@ -70,14 +70,23 @@ h1{
 {
     border: 1px solid grey;
     width: 350px;
-    height: 80px;
+    height: 125px;
     margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     position: relative;
+    background-color: aqua;
 }
+.tasklist span
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:130px ;
+}
+
 .taskmanager
 {
     width: 100%;
