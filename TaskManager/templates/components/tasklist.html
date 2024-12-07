@@ -1,9 +1,10 @@
 <h1>Task Manager</h1>
 <div class="search">
-    <input type="text" name="search"/>
-    <button>Search</button>
+    <input type="text" name="search"  class="searchinput"/>
+    <button class="searchbtn">Search</button>
 </div>
 <div class="taskmanager">
+    {% if task%}
     {% for i in task %}
     <div class="tasklist">
        <span> Task: {{i.taskname}}</span>
@@ -12,6 +13,11 @@
                 <span> Status: {{i.status}}</span>
     </div>
     {% endfor %}
+    {% else %}
+    <div class="tasklist">
+        <span> No item found with this name</span>
+    </div>
+    {% endif %}
 </div>
 
 </form>

@@ -36,6 +36,17 @@ def Default():
     return render_template('index.html')
 
 
+@app.route('/search/<string:id>',methods=['GET'])
+def Search(id):
+    conn = get_db_connection()
+    task=conn.execute('SELECT * FROM tasks where taskname=? OR description=? OR date=? OR status=? ORDER BY taskname ASC',(id,id,id,id)).fetchall()
+    tasklist=[dict(task) for task in task]
+    if tasklist:
+         return render_template('index.html',id='tasklist',task=tasklist)
+    else:
+          return render_template('index.html',id='tasklist',task=None)
+
+
 
 @app.route('/tasklist')
 def FetchDetails():

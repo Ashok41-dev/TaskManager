@@ -54,3 +54,18 @@ async function UpdateTask(){
     }
   }
 }
+SearchTask();
+
+async function SearchTask(){
+  const searchInput=document.querySelector('.searchinput');
+  const searchButton=document.querySelector('.searchbtn');
+
+  if(searchInput)
+  {
+    searchButton.onclick=async (e)=>{
+         e.preventDefault();
+         console.log('work',searchInput.value);
+          window.location.href=`/search/${searchInput.value}`;
+    }
+  }
+}
