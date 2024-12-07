@@ -6,6 +6,8 @@ window.onload=()=>{
     return;
     formSubmit.onsubmit=async(e)=>{
         e.preventDefault();
+        if(!Validation()) return;
+        console.log('work');
         const entries=new FormData(e.target);
         const object=Object.fromEntries(entries.entries());
         const message=document.getElementById('message');
@@ -68,4 +70,32 @@ async function SearchTask(){
           window.location.href=`/search/${searchInput.value}`;
     }
   }
+}
+
+function Validation()
+{
+     const taskName=document.querySelector('.taskname');
+     const description=document.querySelector('.description');
+     const date=document.querySelector('.date');
+     const message=document.querySelector('#message');
+     if(taskName && !taskName.value)
+     {
+      taskName.placeholder="Task name required!"
+     }
+    if(description && !description.value)
+    {
+      description.placeholder="Description name required!"
+    }
+    if(date && !date.value)
+      {
+        message.innerText="Date required!"
+        return;
+      }
+
+      if(!taskName.value || !description.value)
+        {
+          message.innerText="Something is missing!"
+          return false;}
+
+          return true;
 }
